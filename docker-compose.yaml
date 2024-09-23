@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    image: guruwang/blog_web
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        delay: 2s
+        max_attempts: 3
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.web.middlewares=redirect-to-https"
+        - "traefik.http.routers.web.entrypoints=web"
+        - "traefik.http.routers.web.rule=Host(`test.ohbital.com`)"
+
+        - "traefik.http.routers.webhttps.middlewares=limit"
+        - "traefik.http.routers.webhttps.entrypoints=websecure"
+        - "traefik.http.routers.webhttps.rule=Host(`test.ohbital.com`)"
+        - "traefik.http.routers.webhttps.tls=true"
+        - "traefik.http.routers.webhttps.tls.certresolver=zerossl"
+        - "traefik.http.services.webhttps.loadbalancer.server.port=3000"
+    networks:
+      - traefik-public
+networks:
+  traefik-public:
+    external: true
