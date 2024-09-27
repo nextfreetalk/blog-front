@@ -24,7 +24,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${notoSansKr.className}`}>{children}</body>
-      {/* <body>{children}</body> */}
     </html>
   );
 }
