@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 
@@ -9,13 +8,13 @@ const notoSansKr = Noto_Sans_KR({
 });
 
 export const metadata = {
-  title: 'FreeTalk Blog',
-  description: 'FreeTalk Blog',
+  title: "FreeTalk Blog",
+  description: "프론트엔드 기술 수치 비교 블로그",
   // 여기서 메타 태그 추가
   other: {
-    'google-site-verification': 'X6YdZHrWhdKJWPCUe0LrZY93FkFf9X1SvQIsrNgwt38',
+    "google-site-verification": "X6YdZHrWhdKJWPCUe0LrZY93FkFf9X1SvQIsrNgwt38",
   },
-}
+};
 
 export default function RootLayout({
   children,
