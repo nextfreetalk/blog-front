@@ -7,15 +7,6 @@ const notoSansKr = Noto_Sans_KR({
   variable: "--font-noto-sans",
 });
 
-export const metadata = {
-  title: "FreeTalk Blog",
-  description: "프론트엔드 기술 수치 비교 블로그",
-  // 여기서 메타 태그 추가
-  other: {
-    "google-site-verification": "X6YdZHrWhdKJWPCUe0LrZY93FkFf9X1SvQIsrNgwt38",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{

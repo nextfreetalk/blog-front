@@ -1,6 +1,15 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
+export const metadata = {
+  title: 'FreeTalk Blog',
+  description: 'FreeTalk Blog',
+  // 여기서 메타 태그 추가
+  other: {
+    'google-site-verification': 'X6YdZHrWhdKJWPCUe0LrZY93FkFf9X1SvQIsrNgwt38',
+  },
+}
+
 export default function Home() {
   return (
     <div className={styles.page}>
