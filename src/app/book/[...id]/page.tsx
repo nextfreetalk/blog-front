@@ -1,18 +1,17 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import 'github-markdown-css';
-import dynamic from 'next/dynamic';
-import { compileMDX } from 'next-mdx-remote/rsc';
+"use client";
+import React, { useEffect, useState } from "react";
+import "github-markdown-css";
+import dynamic from "next/dynamic";
+import { compileMDX } from "next-mdx-remote/rsc";
 
-type Props = {
-}
+type Props = {};
 
 const page = (props: Props) => {
 	const [data, setData] = useState<any>({ content: null, frontmatter: null });
 
 	useEffect(() => {
 		const init = async () => {
-			const res = await fetch('/book/오브젝트.md')
+			const res = await fetch("/book/오브젝트.md");
 			const markdown = await res.text();
 
 			const { content, frontmatter } = await compileMDX({
@@ -21,13 +20,13 @@ const page = (props: Props) => {
 					parseFrontmatter: true,
 					mdxOptions: {
 						remarkPlugins: [],
-						rehypePlugins: []
-					}
-				}
+						rehypePlugins: [],
+					},
+				},
 			});
-			console.log("frontmatter", frontmatter)
+			console.log("frontmatter", frontmatter);
 			setData({ content, frontmatter });
-		}
+		};
 		init();
 	}, [])
 
@@ -62,7 +61,6 @@ const page = (props: Props) => {
 			"datePublished": "2019-06-17"
 		}
 	};
-
 
 	return (
 		<>
