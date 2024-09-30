@@ -1,36 +1,22 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import "github-markdown-css";
-import dynamic from "next/dynamic";
+import React from "react";
 import { compileMDX } from "next-mdx-remote/rsc";
+import "github-markdown-css";
+import PageClient from "./PageClient"; // Import the client-side component
 
-type Props = {};
+const Page = async () => {
+  const res = await fetch("http://localhost:3000/book/오브젝트.md");
+  const markdown = await res.text();
 
-const page = (props: Props) => {
-  const [data, setData] = useState<any>({ content: null, frontmatter: null });
-
-  useEffect(() => {
-    const init = async () => {
-      const res = await fetch("/book/오브젝트.md");
-      const markdown = await res.text();
-
-      const { content, frontmatter } = await compileMDX({
-        source: markdown,
-        options: {
-          parseFrontmatter: true,
-          mdxOptions: {
-            remarkPlugins: [],
-            rehypePlugins: [],
-          },
-        },
-      });
-      console.log("frontmatter", frontmatter);
-      setData({ content, frontmatter });
-    };
-    init();
-  }, []);
-
-  console.log("data : ", data);
+  const { content, frontmatter } = await compileMDX({
+    source: markdown,
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        remarkPlugins: [],
+        rehypePlugins: [],
+      },
+    },
+  });
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -40,7 +26,7 @@ const page = (props: Props) => {
       name: "oh",
     },
     datePublished: "2024-09-28",
-    reviewBody: data.frontmatter?.desc,
+    reviewBody: frontmatter?.desc,
     reviewRating: {
       "@type": "Rating",
       ratingValue: "5",
@@ -64,19 +50,15 @@ const page = (props: Props) => {
 
   return (
     <>
-      <title>{data.frontmatter?.title}</title>
-      <meta name="description" content={data.frontmatter?.desc} />
+      <title>{frontmatter?.title}</title>
+      <meta name="description" content={frontmatter?.desc} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div className="markdown-body">
-        <h1>{data.frontmatter?.title}</h1>
-        <span>{data.frontmatter?.date}</span>
-        {data.content}
-      </div>
+      <PageClient content={content} frontmatter={frontmatter} />
     </>
   );
 };
 
-export default page;
+export default Page;
