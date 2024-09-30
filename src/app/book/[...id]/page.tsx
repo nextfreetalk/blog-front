@@ -4,11 +4,10 @@ import "github-markdown-css";
 import PageClient from "./PageClient"; // Import the client-side component
 
 const Page = async () => {
-  const res = await fetch("http://localhost:3000/book/오브젝트.md");
-  const markdown = await res.text();
-
+  const res = await fetch("http://localhost:3000/api/content?filename=book/오브젝트.md");
+  const data  = await res.json();
   const { content, frontmatter } = await compileMDX({
-    source: markdown,
+    source: data.data,
     options: {
       parseFrontmatter: true,
       mdxOptions: {
@@ -17,6 +16,8 @@ const Page = async () => {
       },
     },
   });
+
+  console.log("design : ",content);
 
   const structuredData = {
     "@context": "https://schema.org",
