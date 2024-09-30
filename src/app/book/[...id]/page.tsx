@@ -1,12 +1,25 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import "github-markdown-css";
-import dynamic from "next/dynamic";
+import { Metadata } from 'next';
 import { compileMDX } from "next-mdx-remote/rsc";
+import { useEffect, useState } from 'react';
 
-type Props = {};
+export async function generateMetadata(): Promise<Metadata> {
+  const res = await fetch("/book/오브젝트.md");
+  const markdown = await res.text();
 
-const page = (props: Props) => {
+  const { frontmatter } = await compileMDX({
+    source: markdown,
+    options: {
+      parseFrontmatter: true,
+    },
+  });
+
+  return {
+    title: frontmatter?.title,
+    description: frontmatter?.desc,
+  };
+}
+
+export default function Page() {
   const [data, setData] = useState<any>({ content: null, frontmatter: null });
 
   useEffect(() => {
@@ -18,19 +31,13 @@ const page = (props: Props) => {
         source: markdown,
         options: {
           parseFrontmatter: true,
-          mdxOptions: {
-            remarkPlugins: [],
-            rehypePlugins: [],
-          },
         },
       });
-      console.log("frontmatter", frontmatter);
+
       setData({ content, frontmatter });
     };
     init();
   }, []);
-
-  console.log("data : ", data);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -64,8 +71,6 @@ const page = (props: Props) => {
 
   return (
     <>
-      <title>{data.frontmatter?.title}</title>
-      <meta name="description" content={data.frontmatter?.desc} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -77,6 +82,4 @@ const page = (props: Props) => {
       </div>
     </>
   );
-};
-
-export default page;
+}
