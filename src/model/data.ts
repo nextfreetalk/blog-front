@@ -14,6 +14,7 @@ export type ContentType = {
 
 export type CategoryType = {
   name: string;
+  url: string;
 };
 
 export const contentDic: Record<number, ContentType> = {
@@ -30,8 +31,10 @@ export const contentDic: Record<number, ContentType> = {
 export const categoryDic: Record<eCategory, CategoryType> = {
   [eCategory.Book]: {
     name: "서적",
+    url: "book",
   },
   [eCategory.Movie]: {
     name: "영화",
+    url: "movie",
   },
 };

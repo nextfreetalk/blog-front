@@ -18,7 +18,7 @@ const Page = async () => {
       },
     });
 
-  console.log("design : ", content);
+  console.log("design : ", data?.contentInfo);
 
   return (
     <>
@@ -30,7 +30,7 @@ const Page = async () => {
           __html: frontmatter?.structuredData,
         }}
       />
-      <PageClient content={content} frontmatter={frontmatter} />
+      <PageClient content={content} contentInfo={data?.contentInfo} />
     </>
   );
 };
