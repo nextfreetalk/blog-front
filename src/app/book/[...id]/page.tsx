@@ -3,8 +3,9 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import "github-markdown-css";
 import PageClient from "./PageClient"; // Import the client-side component
 
-const Page = async () => {
-  const res = await fetch("http://localhost:3000/api/content/1");
+const Page = async ({params}) => {
+  const id = params.id[0];
+  const res = await fetch(`http://localhost:3000/api/content/${id}`);
   const data = await res.json();
   const { content, frontmatter }: { content: any; frontmatter: any } =
     await compileMDX({
