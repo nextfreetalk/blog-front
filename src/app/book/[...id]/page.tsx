@@ -4,8 +4,10 @@ import "github-markdown-css";
 import PageClient from "./PageClient"; // Import the client-side component
 
 const Page = async () => {
-  const res = await fetch("https:test.ohbital.com/api/content?filename=book/오브젝트.md");
-  const data  = await res.json();
+  const res = await fetch(
+    "https:test.ohbital.com/api/content?filename=book/오브젝트.md",
+  );
+  const data = await res.json();
   const { content, frontmatter } = await compileMDX({
     source: data.data,
     options: {
@@ -17,7 +19,7 @@ const Page = async () => {
     },
   });
 
-  console.log("design : ",content);
+  console.log("design : ", content);
 
   const structuredData = {
     "@context": "https://schema.org",
