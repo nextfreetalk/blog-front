@@ -1,5 +1,6 @@
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
@@ -14,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${notoSansKr.className}`}>{children}</body>
+      <body className={`${notoSansKr.className}`}>
+        <header>
+          <Navbar />
+        </header>
+        {children}
+      </body>
     </html>
   );
 }
